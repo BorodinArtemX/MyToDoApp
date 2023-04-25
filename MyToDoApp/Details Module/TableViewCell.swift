@@ -7,9 +7,6 @@
 
 import UIKit
 
-class TableViewCell: UITableViewCell {
-
-
     final class TableViewCell: UITableViewCell {
         
         private let taskLabel = UILabel()
@@ -40,4 +37,4 @@ class TableViewCell: UITableViewCell {
             
         }
 
-}
+
