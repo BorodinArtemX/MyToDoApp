@@ -25,8 +25,17 @@ class ViewController: UIViewController {
     }
 
     @objc func AddTapButton(){
-        
-        
+        let alert = UIAlertController(title: "Add you'r Task", message: nil, preferredStyle: .alert)
+        alert.addTextField()
+        let okAction = UIAlertAction(title: "Ok", style: .default) { [unowned self] _ in
+            guard let task = alert.textFields!.first?.text else { return }
+            UserDefaults.standard.tasks.append(task)
+            self.myTableView.insertRows(at: [IndexPath(row: UserDefaults.standard.tasks.count - 1, section: 0)], with: .automatic)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in}
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
     
     
