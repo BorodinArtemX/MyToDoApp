@@ -21,19 +21,19 @@ final class ViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
             navigationItem.title = "MyToDoApp"
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(AddTapButton))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapButton))
             setupLayout()
         }
         
         
-        @objc func AddTapButton(){
+        @objc func addTapButton(){
             print("New Task")
             let alert = UIAlertController(title: "Add Task", message: nil, preferredStyle: .alert)
             alert.addTextField()
             let okAction = UIAlertAction(title: "OK", style: .default) { [unowned self] _ in
                 guard let task = alert.textFields!.first?.text else { return }
-                UserDefaults.standard.tasks.append(task)
-                self.myTableView.insertRows(at: [IndexPath(row: UserDefaults.standard.tasks.count - 1, section: 0)], with: .automatic)
+                UserDefaults.standard.tasks.insert(task, at: 0)
+                self.myTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in}
             alert.addAction(okAction)
@@ -43,7 +43,6 @@ final class ViewController: UIViewController {
         
         private func setupLayout() {
             view.addSubview(myTableView)
-//            view.backgroundColor = .white
 
             myTableView.translatesAutoresizingMaskIntoConstraints = false
             
