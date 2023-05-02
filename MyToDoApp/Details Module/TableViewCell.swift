@@ -11,13 +11,24 @@ import UIKit
         
         private let taskLabel = UILabel()
         lazy var dateLabel = UILabel()
+        var onComplete: () -> Void = {}
         func todaysDateAsString() -> String{
             let date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-MM-yyyy"
+            dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
             let str = dateFormatter.string(from: date)
             return str
         }
+        private lazy var doneButton: UIButton = {
+            let action = UIAction { [weak self] _ in
+                self?.onComplete()
+            }
+           let button = UIButton(primaryAction: action)
+            button.setImage(UIImage(systemName: "circle"), for: .normal)
+            button.tintColor = .systemGray.withAlphaComponent(1)
+            return button
+        }()
+        
      
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,14 +44,18 @@ import UIKit
         
         func setup(with task: String) {
             taskLabel.text = task
+            dateLabel.text = todaysDateAsString()
         }
+        
         
         private func setupLayout() {
             addSubview(taskLabel)
             addSubview(dateLabel)
-        
+            addSubview(doneButton)
+            
             dateLabel.translatesAutoresizingMaskIntoConstraints = false
             taskLabel.translatesAutoresizingMaskIntoConstraints = false
+            doneButton.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
                 taskLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
@@ -51,6 +66,9 @@ import UIKit
                 dateLabel.leadingAnchor.constraint(equalTo: taskLabel.leadingAnchor),
                 dateLabel.trailingAnchor.constraint(equalTo: taskLabel.trailingAnchor),
                 dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+                
+                doneButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+                doneButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
             ])}
             
         }

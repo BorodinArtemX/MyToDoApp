@@ -21,11 +21,14 @@ final class ViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
             navigationItem.title = "MyToDoApp"
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .trash, target: self, action: .none)
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapButton))
             setupLayout()
         }
         
         
+    
         @objc func addTapButton(){
             print("New Task")
             let alert = UIAlertController(title: "Add Task", message: nil, preferredStyle: .alert)
