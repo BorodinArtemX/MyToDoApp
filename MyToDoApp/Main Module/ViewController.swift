@@ -17,18 +17,16 @@ final class ViewController: UIViewController {
             return tableView
         }()
         
-        
         override func viewDidLoad() {
             super.viewDidLoad()
             navigationItem.title = "MyToDoApp"
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                barButtonSystemItem: .trash, target: self, action: .none)
+                barButtonSystemItem: .trash, target: self, action: .none
+)
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapButton))
             setupLayout()
         }
         
-        
-    
         @objc func addTapButton(){
             print("New Task")
             let alert = UIAlertController(title: "Add Task", message: nil, preferredStyle: .alert)
@@ -58,7 +56,13 @@ final class ViewController: UIViewController {
         }
     }
     
-    extension ViewController: UITableViewDelegate {
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController = DetailViewController()
+        navigationController?.pushViewController(viewController, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
         func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
             let action = UIContextualAction(style: .normal, title: "Delete") {  _,_,_  in
                 

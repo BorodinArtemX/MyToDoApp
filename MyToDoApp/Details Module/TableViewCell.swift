@@ -12,13 +12,15 @@ import UIKit
         private let taskLabel = UILabel()
         lazy var dateLabel = UILabel()
         var onComplete: () -> Void = {}
+        let date = "\(Date())"
         func todaysDateAsString() -> String{
-            let date = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
-            let str = dateFormatter.string(from: date)
+            let str = dateFormatter.string(from: Date())
             return str
         }
+        
+        
         private lazy var doneButton: UIButton = {
             let action = UIAction { [weak self] _ in
                 self?.onComplete()
@@ -36,6 +38,7 @@ import UIKit
             dateLabel.text = todaysDateAsString()
             dateLabel.font = .systemFont(ofSize: 11)
             dateLabel.textColor = .lightGray
+            UserSettings.userData = date
         }
         
         required init?(coder: NSCoder) {

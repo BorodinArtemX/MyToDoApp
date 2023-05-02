@@ -13,3 +13,23 @@ extension UserDefaults {
         set { UserDefaults.standard.set(newValue, forKey: "Tasks")}
     }
 }
+
+final class UserSettings {
+    
+    private enum SettingsKeys: String {
+        case userData
+    }
+    
+    static var userData: String! {
+        get {
+            return UserDefaults.standard.string(forKey: SettingsKeys.userData.rawValue)
+        } set {
+            
+            let defaults = UserDefaults.standard
+            let key = SettingsKeys.userData.rawValue
+            if let data = newValue {
+                defaults.set(data, forKey: key)
+            }
+        }
+    }
+}
